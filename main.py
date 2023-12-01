@@ -70,4 +70,4 @@ def delete_item(item_id: int):
         items_id -= 1
         return item
     except IndexError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='item does not exists')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')

@@ -89,10 +89,10 @@ def get_item(item_id: int):
     try:
         return items[item_id - 1]
     except IndexError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='item does not exists')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
 ```
 
-Проверка существования item происходит за счёт блока try except. Если элемента с переданным id не существует, будет вызвано исключение IndexError, так как мы выйдем за границы нашего списка. Если элемента не существует, мы оповещаем об этом пользователя статус-кодом 400 и сообщением "item does not exists"
+Проверка существования item происходит за счёт блока try except. Если элемента с переданным id не существует, будет вызвано исключение IndexError, так как мы выйдем за границы нашего списка. Если элемента не существует, мы оповещаем об этом пользователя статус-кодом 404 и сообщением "item does not exists"
 
 6. Теперь создадим endpoint '/items', который будет обрабатывать POST-запросы, создавать item и добавлять его в список items
 
@@ -129,7 +129,7 @@ def patch_item(item_id: int, new_name: str = None, new_coast: float = None, new_
             items[item_id - 1]['in_stock'] = new_in_stock
             return items[item_id - 1]
     except IndexError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='item does not exists')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
 ```
 
 Так же, как и при обработке GET-запросов будем проверять, существует ли требуемый item
@@ -145,7 +145,7 @@ def patch_item(item_id: int, new_name: str, new_coast: float, new_in_stock: bool
         items[item_id - 1]['in_stock'] = new_in_stock
         return items[item_id - 1]
     except IndexError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='item does not exists')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
 ```
 
 Все так же, как и в прошлом пункте, только требуемый item изменяется полностью
@@ -164,7 +164,7 @@ def delete_item(item_id: int):
         items_id -= 1
         return item
     except IndexError:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='item does not exists')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
 ```
 
 Наше приложение готово. Теперь можно запустить его и проверить работоспособность.
